@@ -23,17 +23,23 @@ modules:
     build-commands:
       - ar x scumble-0.1.45.deb
       - tar -xf data.tar.*
-      - mkdir -p /app/bin /app/lib/scumble /app/share/applications /app/share/metainfo /app/share/icons/hicolor/512x512/apps
+      - mkdir -p /app/bin /app/lib/scumble /app/share/applications /app/share/metainfo /app/share/icons/hicolor/scalable/apps /app/share/icons/hicolor/512x512/apps
       - cp -r opt/Scumble/* /app/lib/scumble/
       - install -Dm755 scumble.sh /app/bin/scumble
       - install -Dm644 com.denrakeiw.Scumble.desktop /app/share/applications/com.denrakeiw.Scumble.desktop
       - install -Dm644 com.denrakeiw.Scumble.metainfo.xml /app/share/metainfo/com.denrakeiw.Scumble.metainfo.xml
-      - install -Dm644 usr/share/icons/hicolor/512x512/apps/scumble.png /app/share/icons/hicolor/512x512/apps/com.denrakeiw.Scumble.png
+      - install -Dm644 com.denrakeiw.Scumble.svg /app/share/icons/hicolor/scalable/apps/com.denrakeiw.Scumble.svg
+      - rsvg-convert -w 512 -h 512 com.denrakeiw.Scumble.svg -o com.denrakeiw.Scumble.png
+      - install -Dm644 com.denrakeiw.Scumble.png /app/share/icons/hicolor/512x512/apps/com.denrakeiw.Scumble.png
     sources:
       - type: file
         url: https://github.com/DenRakEiw/scumble/releases/download/v0.1.45/scumble-0.1.45.deb
         sha256: e28d15a3dcd336ccdd053fb6f4b8c78574a5d60eb18868e898cc869014362d3b
         only-arches: [x86_64]
+      - type: file
+        url: https://raw.githubusercontent.com/DenRakEiw/scumble/main/build/icon.svg
+        sha256: 2785aac55b743a3d93555fcb735b8367b4174a208c6fab4b8de37564aab3de54
+        dest-filename: com.denrakeiw.Scumble.svg
       - type: inline
         dest-filename: scumble.sh
         contents: |
@@ -83,7 +89,9 @@ modules:
             <url type="homepage">https://www.denrakeiw.com/scumble</url>
             <url type="bugtracker">https://github.com/DenRakEiw/scumble/issues</url>
             <url type="vcs-browser">https://github.com/DenRakEiw/scumble</url>
-            <developer_name>DenRakEiw</developer_name>
+            <developer id="com.denrakeiw">
+              <name>DenRakEiw</name>
+            </developer>
             <categories>
               <category>Graphics</category>
               <category>2DGraphics</category>
